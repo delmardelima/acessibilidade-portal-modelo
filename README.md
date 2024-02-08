@@ -47,6 +47,7 @@ Para instalar o botão, siga os seguintes passos:
 ![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/969d5dcd-b3ca-4a5d-a31e-4a9be1d030e3)
 
 9. Para personalizar o seu tema com o botão de acessibilidade, você deve encontrar a tag </head> no inicio do arquivo index.html e adicionar o seguinte CSS:
+
 ```
     <style>
     /* Define o estilo do botão */
@@ -152,9 +153,226 @@ Para instalar o botão, siga os seguintes passos:
     </style>
 </head>
 ```
-1. Clone o repositório para o seu computador: `git clone https://github.com/seu-usuario/projeto-botao-acessibilidade.git`
-2. Acesse a pasta do projeto: `cd projeto-botao-acessibilidade`
-3. Abra o arquivo `index.html` em um navegador de sua preferência.
+
+10. Após a tag <body>, insira o seguinte código de HTML e JavaScript.
+
+```
+    <!-- Define o botão -->
+    <button class="button" id="menu-button"><i class="fa fa-wheelchair"></i></button>
+
+    <!-- Define o menu de opções -->
+    <div class="dropdown" id="menu-options">
+        <div id="menu-title">Ferramentas de acessibilidade</div>
+        <a onclick="increaseText()"><i class="fas fa-text-height"></i> Aumentar texto</a>
+        <a onclick="resetText()"><i class="fas fa-sync-alt"></i> Redefinir texto</a>
+        <a onclick="decreaseText()"><i class="fas fa-text-height"></i> Diminuir texto</a>
+        <a onclick="toggleReadableFont()"><i class="fas fa-font"></i> Fonte legível</a>
+        <a onclick="tornarSiteCinza()"><i class="fas fa-barcode"></i> Escala de cinza</a>
+        <a onclick="toggleContrast()"><i class="fas fa-adjust"></i> Alto Contraste</a>
+        <a onclick="toggleNegative()"><i class="fas fa-eye"></i> Contraste Negativo</a>
+        <a onclick="toggleLight()"><i class="fas fa-sun"></i> Fundo claro</a>
+        <a onclick="toggleUnderline()"><i class="fas fa-underline"></i> Links Sublinhado</a>
+        <a onclick="leitordeTela()"><i class="fas fa-volume-up"></i> Leitor de tela</a>
+        <a onclick="resetSettings()"><i class="fas fa-sync-alt"></i> Redefinir</a>
+    </div>
+
+    <!-- Adiciona o script para exibir o menu de opções -->
+    <script>
+    // Obtém o botão e o menu de opções
+    var button = document.getElementById("menu-button");
+    var menu = document.getElementById("menu-options");
+
+    // Adiciona um evento de clique ao botão
+    button.addEventListener("click", function() {
+        // Verifica se o menu de opções está sendo exibido
+        if (menu.style.display === "none") {
+            // Exibe o menu de opções
+            menu.style.display = "block";
+        } else {
+            // Oculta o menu de opções
+            menu.style.display = "none";
+        }
+    });
+
+    // Tamanho da fonte padrão
+    var defaultFontSize = 100;
+    var fontSize = defaultFontSize;
+
+    function increaseText() {
+        fontSize += 10;
+        document.body.style.fontSize = fontSize + "%";
+        localStorage.setItem('fontSize', fontSize);
+    }
+
+    function resetText() {
+        fontSize = defaultFontSize;
+        document.body.style.fontSize = fontSize + "%";
+        localStorage.setItem('fontSize', fontSize);
+    }
+
+    function decreaseText() {
+        fontSize -= 10;
+        document.body.style.fontSize = fontSize + "%";
+        localStorage.setItem('fontSize', fontSize);
+    }
+
+    function tornarSiteCinza() {
+        var element = document.body;
+        element.classList.toggle("grayscale");
+    }
+
+    function toggleContrast() {
+        var element = document.body;
+        element.classList.toggle("contrast");
+    }
+
+    function toggleNegative() {
+        var element = document.body;
+        element.classList.toggle("negative");
+    }
+
+    function toggleLight() {
+        var element = document.body;
+        element.classList.toggle("light");
+    }
+
+    function toggleUnderline() {
+        var element = document.body;
+        element.classList.toggle("underline-links");
+    }
+
+    function toggleReadableFont() {
+        var element = document.body;
+        element.classList.toggle("readable-font");
+    }
+
+    // Função leitordeTela
+    function leitordeTela() {
+        // Seleciona o elemento principal
+        let mainElement = document.getElementById('main-content');
+
+        // Obtém todo o texto dentro do elemento principal
+        let text = mainElement.innerText;
+
+        // Divide o texto em palavras
+        let words = text.split(' ');
+
+        // Índice da palavra atual
+        let currentWordIndex = 0;
+
+        // Função para remover o destaque de todas as palavras
+        function removeHighlight() {
+            mainElement.innerHTML = mainElement.innerHTML.replace(
+                /<span style="border: 1px solid black; background-color: yellow;">(.*?)<\/span>/g, '$1');
+        }
+
+        // Função para destacar uma palavra em amarelo
+        function highlightWord(word) {
+            let innerHTML = mainElement.innerHTML;
+            let index = innerHTML.indexOf(word);
+            if (index >= 0) {
+                innerHTML = innerHTML.substring(0, index) +
+                    "<span style='border: 1px solid black; background-color: yellow;'>" + innerHTML.substring(index,
+                        index + word.length) + "</span>" + innerHTML.substring(index + word.length);
+                mainElement.innerHTML = innerHTML;
+            }
+        }
+
+        // Função para falar uma palavra e destacá-la
+        function speakAndHighlightWord() {
+            if (currentWordIndex < words.length) {
+                // Remove o destaque das palavras anteriores
+                removeHighlight();
+
+                // Destaca as próximas quatro palavras
+                for (let i = 0; i < 4; i++) {
+                    if (currentWordIndex + i < words.length) {
+                        highlightWord(words[currentWordIndex + i]);
+                    }
+                }
+
+                // Cria uma nova instância de SpeechSynthesisUtterance
+                let utterance = new SpeechSynthesisUtterance(words.slice(currentWordIndex, currentWordIndex + 4).join(
+                    ' '));
+
+                // Fala as palavras usando a API de síntese de fala
+                window.speechSynthesis.speak(utterance);
+
+                // Incrementa o índice da palavra atual
+                currentWordIndex += 4;
+
+                // Chama esta função novamente quando as palavras atuais terminarem de ser faladas
+                utterance.onend = function(event) {
+                    setTimeout(speakAndHighlightWord, 100); // Adiciona um atraso de 100ms
+                };
+            }
+        }
+
+        // Inicia o leitor de tela
+        speakAndHighlightWord();
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function toggle(className) {
+        var element = document.body;
+        var isActive = element.classList.toggle(className);
+        setCookie(className, isActive ? 'true' : 'false', 30);
+    }
+
+    // Função para redefinir as configurações
+    function resetSettings() {
+        ['grayscale', 'contrast', 'negative', 'light', 'underline-links', 'readable-font'].forEach(function(className) {
+            document.body.classList.remove(className);
+            setCookie(className, 'false', 30);
+            fontSize = defaultFontSize;
+            document.body.style.fontSize = fontSize + "%";
+        });
+    }
+
+    window.onload = function() {
+        ['grayscale', 'contrast', 'negative', 'light', 'underline-links', 'readable-font'].forEach(function(
+            className) {
+            if (getCookie(className) === 'true') {
+                document.body.classList.add(className);
+            }
+        });
+    }
+    </script>
+```
+
+11. Após inserir os códigos, clique em Salvar.
+
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/f4c9977a-88b2-4358-a92e-4469dae95c9b)
+
+12. Após salvar o arquivo index.html com as modificações desejadas, clique em Voltar ao Painel de Controle no canto superior esquerdo da página de edição de código.
+
+13. Na página Configuração de Tema, selecione o tema modificado e clique em Ativar.
+
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/b48ccd9a-27ea-4d98-ad42-ac66e33613f0)
+
+14. Pronto! Agora você pode acessar o site e ver as mudanças que você fez no tema. Você pode testar o site em diferentes dispositivos e navegadores para garantir que ele esteja funcionando corretamente.
 
 ## Como contribuir
 
