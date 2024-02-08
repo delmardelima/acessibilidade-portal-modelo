@@ -49,6 +49,7 @@ Para instalar o botão, siga os seguintes passos:
 9. Para personalizar o seu tema com o botão de acessibilidade, você deve encontrar a tag </head> no inicio do arquivo index.html e adicionar o seguinte CSS:
 
 ```
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
     /* Define o estilo do botão */
     .button {
