@@ -374,6 +374,8 @@ Para instalar o botão, siga os seguintes passos:
 
 14. Pronto! Agora você pode acessar o site e ver as mudanças que você fez no tema. Você pode testar o site em diferentes dispositivos e navegadores para garantir que ele esteja funcionando corretamente.
 
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/0413d777-91ab-44e2-8b14-faacff63c2e3)
+
 ## Como contribuir
 
 Para contribuir com o projeto, você pode:
@@ -381,6 +383,25 @@ Para contribuir com o projeto, você pode:
 - Reportar bugs e sugerir melhorias através da aba de issues do GitHub.
 - Fazer um fork do repositório e enviar um pull request com suas alterações.
 - Compartilhar o projeto com outras pessoas interessadas em acessibilidade digital.
+
+## Suporte
+Sinta-se à vontade para fazer perguntas através do WhatsApp: https://wa.me/5597991442486
+
+## Doação
+### Doações via PIX / Donations PIX: 
+#### Email: delmar.apui@gmail.com
+#### Celular: (97) 99144-2486
+
+## Conheça
+##### [YouTube][] 
+##### [WhatsApp][]
+##### [Instagram][]
+##### [Facebook][] 
+
+[YouTube]: https://bit.ly/SeguirCortesDev
+[WhatsApp]: https://wa.me/5597991442486
+[Instagram]: https://www.instagram.com/cortesdevoficial/
+[Facebook]: https://www.fb.com/cortesdevoficial
 
 ## Licença
 
