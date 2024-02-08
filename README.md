@@ -14,6 +14,14 @@ O projeto utiliza as seguintes tecnologias:
 ## Como instalar
 
 Para instalar o botão, siga os seguintes passos:
+1. Acesse o portal utilizando suas credenciais de administrador.
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/340204ee-4e65-4c5c-b098-01d5bb2eb6f3)
+2. No canto superior direito da tela, selecione o nome do usuário e, em seguida, clique em Configuração do site.
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/ac4e7290-b04b-480f-8cc6-a8e0479114e7)
+3. Na página Configuração do site, selecione a opção Tema.
+![image](https://github.com/delmardelima/acessibilidade-portal-modelo/assets/27692608/625a72ff-d245-42c0-9627-ccc66a7fb1cb)
+
+
 ```
     <style>
     /* Define o estilo do botão */
