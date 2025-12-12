@@ -17,9 +17,10 @@
         .acessibilidade-container {
             position: fixed; bottom: 20px; right: 20px; z-index: 2147483647;
             display: flex; flex-direction: column; align-items: flex-end;
-            filter: none !important; pointer-events: none; /* Permite clicar através do container vazio */
+            filter: none !important; pointer-events: none;
+            font-family: Arial, sans-serif;
         }
-        .acessibilidade-container > * { pointer-events: auto; } /* Reativa cliques nos filhos */
+        .acessibilidade-container > * { pointer-events: auto; }
         
         .button-access {
             background-color: #3288F2; border: none; color: white;
@@ -33,26 +34,33 @@
         
         .dropdown-access {
             display: none; background-color: #f1f1f1; border: 1px solid #ccc;
-            border-radius: 5px; padding: 0; margin-bottom: 15px; width: 220px;
+            border-radius: 5px; padding: 0; margin-bottom: 15px; width: 280px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden;
+            /* Garante que o menu fique logo acima do botão para facilitar o movimento do mouse */
+            margin-bottom: 10px; 
         }
-        @media (min-width: 768px) {
-            .acessibilidade-container:hover .dropdown-access { display: block; }
-        }
+        
         .dropdown-access a {
-            display: flex; align-items: center; padding: 10px 15px;
-            text-decoration: none; color: #333; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 15px; text-decoration: none; color: #333; cursor: pointer;
             border-bottom: 1px solid #e0e0e0; background: #fff;
-            transition: background 0.2s; font-family: Arial, sans-serif; font-size: 14px;
+            transition: background 0.2s; font-size: 14px;
         }
         .dropdown-access a:hover { background-color: #e6e6e6; }
         .dropdown-access i { width: 25px; text-align: center; margin-right: 10px; color: #3288F2; }
-        #menu-title { background-color: #3288F2; color: white; padding: 10px; font-weight: bold; text-align: center; font-family: sans-serif; }
+        
+        .access-key {
+            font-size: 10px; color: #666; background: #ddd; padding: 2px 5px; 
+            border-radius: 4px; border: 1px solid #ccc; min-width: 50px; text-align: center;
+        }
+
+        #menu-title { background-color: #3288F2; color: white; padding: 10px; font-weight: bold; text-align: center; }
 
         /* Classes de Efeito */
         .acessibilidade-grayscale { filter: grayscale(100%) !important; }
         .acessibilidade-contrast { filter: contrast(200%) !important; }
         .acessibilidade-negative { filter: invert(100%) !important; background-color: #fff; }
+        body.acessibilidade-global-negative { background-color: #000 !important; }
         .acessibilidade-light-mode { background-color: #FFF !important; color: #000 !important; }
         .acessibilidade-light-mode * { background-color: #FFF !important; color: #000 !important; border-color: #000 !important; }
         .acessibilidade-underline a { text-decoration: underline !important; }
@@ -61,24 +69,58 @@
     document.head.appendChild(style);
 
     // =================================================================
-    // 3. INJEÇÃO DE HTML (Widget)
+    // 3. INJEÇÃO DE HTML (Widget com Atalhos)
     // =================================================================
     var widgetHTML = `
         <div class="dropdown-access" id="menu-options-access">
             <div id="menu-title">Acessibilidade</div>
-            <a id="btn-inc-text"><i class="fas fa-text-height"></i> Aumentar texto</a>
-            <a id="btn-dec-text"><i class="fas fa-text-height"></i> Diminuir texto</a>
-            <a id="btn-reset-text"><i class="fas fa-sync-alt"></i> Redefinir texto</a>
-            <a id="btn-readable"><i class="fas fa-font"></i> Fonte legível</a>
-            <a id="btn-gray"><i class="fas fa-barcode"></i> Escala de cinza</a>
-            <a id="btn-contrast"><i class="fas fa-adjust"></i> Alto Contraste</a>
-            <a id="btn-negative"><i class="fas fa-eye"></i> Contraste Negativo</a>
-            <a id="btn-light"><i class="fas fa-sun"></i> Fundo claro</a>
-            <a id="btn-underline"><i class="fas fa-underline"></i> Sublinhar Links</a>
-            <a id="btn-reader"><i class="fas fa-volume-up"></i> Leitor de tela</a>
-            <a id="btn-reset"><i class="fas fa-trash-restore"></i> Redefinir Tudo</a>
+            
+            <a id="btn-inc-text" title="Aumentar (Alt+Shift+A)">
+                <span><i class="fas fa-plus"></i> Aumentar texto</span>
+                <span class="access-key">Alt+Shft+A</span>
+            </a>
+            <a id="btn-dec-text" title="Diminuir (Alt+Shift+D)">
+                <span><i class="fas fa-minus"></i> Diminuir texto</span>
+                <span class="access-key">Alt+Shft+D</span>
+            </a>
+            <a id="btn-reset-text" title="Original (Alt+Shift+O)">
+                <span><i class="fas fa-sync-alt"></i> Redefinir texto</span>
+                <span class="access-key">Alt+Shft+O</span>
+            </a>
+            <a id="btn-readable" title="Legível (Alt+Shift+L)">
+                <span><i class="fas fa-font"></i> Fonte legível</span>
+                <span class="access-key">Alt+Shft+L</span>
+            </a>
+            <a id="btn-gray" title="Cinza (Alt+Shift+G)">
+                <span><i class="fas fa-barcode"></i> Escala de cinza</span>
+                <span class="access-key">Alt+Shft+G</span>
+            </a>
+            <a id="btn-contrast" title="Contraste (Alt+Shift+C)">
+                <span><i class="fas fa-adjust"></i> Alto Contraste</span>
+                <span class="access-key">Alt+Shft+C</span>
+            </a>
+            <a id="btn-negative" title="Inverter (Alt+Shift+N)">
+                <span><i class="fas fa-eye"></i> Contraste Negativo</span>
+                <span class="access-key">Alt+Shft+N</span>
+            </a>
+            <a id="btn-light" title="Fundo Claro (Alt+Shift+B)">
+                <span><i class="fas fa-sun"></i> Fundo claro</span>
+                <span class="access-key">Alt+Shft+B</span>
+            </a>
+            <a id="btn-underline" title="Sublinhar (Alt+Shift+U)">
+                <span><i class="fas fa-underline"></i> Sublinhar Links</span>
+                <span class="access-key">Alt+Shft+U</span>
+            </a>
+            <a id="btn-reader" title="Ler Tela (Alt+Shift+S)">
+                <span><i class="fas fa-volume-up"></i> Leitor de tela</span>
+                <span class="access-key">Alt+Shft+S</span>
+            </a>
+            <a id="btn-reset" title="Resetar (Alt+Shift+R)">
+                <span><i class="fas fa-trash-restore"></i> Redefinir Tudo</span>
+                <span class="access-key">Alt+Shft+R</span>
+            </a>
         </div>
-        <button class="button-access" id="menu-button-access" aria-label="Abrir menu de acessibilidade">
+        <button class="button-access" id="menu-button-access" aria-label="Abrir menu de acessibilidade (Alt + Shift + M)">
             <i class="fa fa-wheelchair"></i>
         </button>
     `;
@@ -88,7 +130,6 @@
     container.className = 'acessibilidade-container';
     container.innerHTML = widgetHTML;
     
-    // Garante que carrega após o DOM estar pronto
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => document.body.appendChild(container));
     } else {
@@ -96,30 +137,73 @@
     }
 
     // =================================================================
-    // 4. LÓGICA DO SISTEMA
+    // 4. LÓGICA DO SISTEMA (INTERAÇÃO HÍBRIDA)
     // =================================================================
     
-    // Aguarda elementos existirem para adicionar eventos
     setTimeout(function() {
         var btn = document.getElementById("menu-button-access");
         var menu = document.getElementById("menu-options-access");
-        var visible = false;
+        
+        // Timer para controlar o atraso de fechamento
+        var hideTimeout = null; 
+        var isMenuOpen = false;
 
-        // Controle Mobile/Click
+        // --- FUNÇÕES DE CONTROLE VISUAL ---
+        function openMenu() {
+            clearTimeout(hideTimeout); // Cancela fechamento pendente se houver
+            menu.style.display = "block";
+            isMenuOpen = true;
+        }
+
+        function closeMenu() {
+            // Dá um atraso de 300ms. Se o usuário voltar o mouse nesse tempo, cancelamos.
+            hideTimeout = setTimeout(function() {
+                menu.style.display = "none";
+                isMenuOpen = false;
+            }, 300);
+        }
+
+        function toggleMenu() {
+            if (isMenuOpen) {
+                // Se for fechar via clique, fecha imediato sem delay
+                clearTimeout(hideTimeout);
+                menu.style.display = "none";
+                isMenuOpen = false;
+            } else {
+                openMenu();
+            }
+        }
+
+        // --- EVENTOS DO MOUSE (HOVER INTELIGENTE) ---
+        
+        // 1. Entrou no Botão -> Abre
+        btn.addEventListener("mouseenter", openMenu);
+        
+        // 2. Saiu do Botão -> Agenda fechamento (exceto se entrar no menu logo em seguida)
+        btn.addEventListener("mouseleave", closeMenu);
+
+        // 3. Entrou no Menu -> Cancela fechamento (mantém aberto)
+        menu.addEventListener("mouseenter", openMenu);
+
+        // 4. Saiu do Menu -> Agenda fechamento
+        menu.addEventListener("mouseleave", closeMenu);
+
+        // --- EVENTO DE CLIQUE (MOBILE/DESKTOP) ---
         btn.addEventListener("click", function(e) {
             e.stopPropagation();
-            visible = !visible;
-            menu.style.display = visible ? "block" : "";
+            toggleMenu(); // Permite clicar para fechar ou abrir
         });
 
+        // Fecha ao clicar fora (para mobile principalmente)
         document.addEventListener("click", function(e) {
-            if (visible && !container.contains(e.target)) {
-                menu.style.display = "";
-                visible = false;
+            if (isMenuOpen && !container.contains(e.target)) {
+                clearTimeout(hideTimeout);
+                menu.style.display = "none";
+                isMenuOpen = false;
             }
         });
 
-        // Funções Auxiliares
+        // --- MANIPULAÇÃO DO DOM ---
         function getElements() {
             return document.querySelectorAll('body > *:not(#acessibilidade-wrapper):not(script):not(style):not(link)');
         }
@@ -132,10 +216,14 @@
                 els.forEach(el => el.classList.remove('acessibilidade-grayscale', 'acessibilidade-contrast'));
                 var active = false;
                 els.forEach(el => active = el.classList.toggle(cls));
-                document.body.style.backgroundColor = active ? '#000' : '';
+                
+                if (active) document.body.classList.add('acessibilidade-global-negative');
+                else document.body.classList.remove('acessibilidade-global-negative');
+
             } else {
                 els.forEach(el => el.classList.remove('acessibilidade-negative'));
-                document.body.style.backgroundColor = '';
+                document.body.classList.remove('acessibilidade-global-negative');
+                
                 if(cls === 'acessibilidade-grayscale') els.forEach(el => el.classList.remove('acessibilidade-contrast'));
                 if(cls === 'acessibilidade-contrast') els.forEach(el => el.classList.remove('acessibilidade-grayscale'));
                 els.forEach(el => el.classList.toggle(cls));
@@ -152,8 +240,10 @@
             if (action === 'increase') fontSize += 10;
             if (action === 'decrease') fontSize -= 10;
             if (action === 'reset') fontSize = 100;
+            
             if (fontSize < 70) fontSize = 70;
             if (fontSize > 200) fontSize = 200;
+            
             document.body.style.fontSize = fontSize + "%";
             var icon = document.querySelector('.button-access');
             if(icon) icon.style.fontSize = "16px";
@@ -173,7 +263,7 @@
                 el.classList.remove('acessibilidade-grayscale', 'acessibilidade-contrast', 'acessibilidade-negative', 
                 'acessibilidade-light-mode', 'acessibilidade-underline', 'acessibilidade-font');
             });
-            document.body.style.backgroundColor = '';
+            document.body.classList.remove('acessibilidade-global-negative');
             document.body.style.fontSize = '';
             fontSize = 100;
             localStorage.removeItem('acc_classes');
@@ -192,7 +282,7 @@
             }
         }
 
-        // Event Listeners (Sem onclick no HTML para evitar escopo global)
+        // --- EVENTOS DE BOTÕES ---
         document.getElementById('btn-inc-text').onclick = () => fontManager('increase');
         document.getElementById('btn-dec-text').onclick = () => fontManager('decrease');
         document.getElementById('btn-reset-text').onclick = () => fontManager('reset');
@@ -204,6 +294,29 @@
         document.getElementById('btn-underline').onclick = () => toggleEffect('acessibilidade-underline');
         document.getElementById('btn-reader').onclick = () => leitordeTela();
         document.getElementById('btn-reset').onclick = () => resetSettings();
+
+        // --- SISTEMA DE TECLAS DE ATALHO (Alt + Shift + Tecla) ---
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey && e.shiftKey) {
+                switch(e.key.toUpperCase()) {
+                    case 'A': fontManager('increase'); break;
+                    case 'D': fontManager('decrease'); break;
+                    case 'O': fontManager('reset'); break;
+                    case 'L': toggleEffect('acessibilidade-font'); break;
+                    case 'G': toggleFilter('acessibilidade-grayscale'); break;
+                    case 'C': toggleFilter('acessibilidade-contrast'); break;
+                    case 'N': toggleFilter('acessibilidade-negative'); break;
+                    case 'B': toggleEffect('acessibilidade-light-mode'); break;
+                    case 'U': toggleEffect('acessibilidade-underline'); break;
+                    case 'S': leitordeTela(); break;
+                    case 'R': resetSettings(); break;
+                    case 'M': 
+                        if(isMenuOpen) { clearTimeout(hideTimeout); menu.style.display = "none"; isMenuOpen=false; }
+                        else openMenu();
+                        break;
+                }
+            }
+        });
 
         // Carregar Estado
         var savedSize = localStorage.getItem('acc_fontSize');
@@ -219,6 +332,6 @@
             });
         }
 
-    }, 500); // Pequeno delay para garantir injeção
+    }, 500);
 
 })();
