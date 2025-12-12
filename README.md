@@ -279,7 +279,7 @@ Para instalar o Botão de Acessibilidade no seu site, você **não precisa baixa
 Copie e cole este código:
 
 ```html
-<script src="[https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js](https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js)"></script>
+<script src="https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js"></script>
 ```
 
 ### **Vantagens deste método:**
