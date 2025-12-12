@@ -3,322 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Exemplo</title>
+    <title>Página Exemplo - Acessibilidade</title>
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Custom CSS -->
+    
+    <!-- Custom CSS (Acessibilidade) -->
+    <!-- INICIO DO BLOCO CSS DE ACESSIBILIDADE -->
     <style>
-    /* Define o estilo do botão */
-    .button {
-        background-color: #3288F2;
-        /* Cor de fundo */
-        border: none;
-        /* Sem borda */
-        color: white;
-        /* Cor do texto */
-        padding: 5px;
-        /* Espaçamento interno */
-        text-align: center;
-        /* Alinhamento do texto */
-        text-decoration: none;
-        /* Sem decoração de texto */
-        display: inline-block;
-        /* Exibição em bloco */
-        font-size: 16px;
-        /* Tamanho da fonte */
-        margin: 4px 2px;
-        /* Margem */
-        cursor: pointer;
-        /* Cursor */
+    /* ============================================================
+       1. ESTILOS DO WIDGET (BOTÃO E MENU) - Z-INDEX MÁXIMO
+       ============================================================ */
+    .acessibilidade-container {
         position: fixed;
-        /* Posição fixa */
         bottom: 20px;
-        /* Distância do fundo */
         right: 20px;
-        /* Distância da direita */
+        z-index: 2147483647; /* Garante que fique acima de tudo */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        filter: none !important; /* Protege o botão dos filtros */
+    }
+
+    .button-access {
+        background-color: #3288F2;
+        border: none;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        cursor: pointer;
         border-radius: 50%;
-        /* Cantos arredondados */
         width: 60px;
-        /* Largura */
         height: 60px;
-        /* Altura */
-        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transition: transform 0.2s, background-color 0.2s;
     }
 
-    /* Define o estilo do ícone */
-    .fa {
-        font-size: 30px;
+    .button-access:hover {
+        transform: scale(1.1);
+        background-color: #1c75e2;
     }
 
+    .button-access .fa { font-size: 30px; }
 
     .dropdown {
         display: none;
-        position: fixed;
-        bottom: 80px;
-        right: 20px;
         background-color: #f1f1f1;
-        border: 1px solid #ddd;
+        border: 1px solid #ccc;
         border-radius: 5px;
-        padding: 10px;
-        z-index: 1000;
+        padding: 0;
+        margin-bottom: 15px;
+        width: 220px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        overflow: hidden;
+    }
+
+    /* Hover apenas em telas grandes */
+    @media (min-width: 768px) {
+        .acessibilidade-container:hover .dropdown {
+            display: block;
+        }
     }
 
     .dropdown a {
-        display: block;
-        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
         text-decoration: none;
         color: #333;
-    }
-
-    .dropdown a:hover {
-        background-color: #ddd;
-    }
-
-    #menu-title {
-        background-color: #ddd;
-        padding: 5px 10px;
-        font-weight: bold;
-    }
-
-    #menu-options {
-        display: none;
-    }
-
-    .grayscale {
-        filter: grayscale(100%);
-    }
-
-    .contrast {
-        filter: contrast(200%);
-    }
-
-    .negative {
-        filter: invert(100%);
-    }
-
-    .light {
-        background-color: #FFFFFF;
-    }
-
-    .underline-links a {
-        text-decoration: underline;
-    }
-
-    .readable-font {
+        cursor: pointer;
+        border-bottom: 1px solid #e0e0e0;
+        background: #fff;
+        transition: background 0.2s;
         font-family: Arial, sans-serif;
-        font-size: 18px;
+        font-size: 14px;
+    }
+
+    .dropdown a:hover { background-color: #e6e6e6; }
+    .dropdown a:last-child { border-bottom: none; }
+    .dropdown i { width: 25px; text-align: center; margin-right: 10px; color: #3288F2; }
+    #menu-title { background-color: #3288F2; color: white; padding: 10px; font-weight: bold; text-align: center; }
+
+    /* ============================================================
+       2. CLASSES DE EFEITO (Aplicadas aos elementos do site)
+       ============================================================ */
+    
+    .acessibilidade-grayscale { filter: grayscale(100%) !important; }
+    .acessibilidade-contrast { filter: contrast(200%) !important; }
+    
+    /* O negativo precisa inverter e garantir fundo branco para virar preto */
+    .acessibilidade-negative { 
+        filter: invert(100%) !important; 
+        background-color: #fff; 
+    }
+
+    /* Modificadores de Texto e Cor */
+    .acessibilidade-light-mode { background-color: #FFF !important; color: #000 !important; }
+    .acessibilidade-light-mode * { background-color: #FFF !important; color: #000 !important; border-color: #000 !important; }
+    
+    .acessibilidade-underline a { text-decoration: underline !important; }
+    
+    .acessibilidade-font { 
+        font-family: Arial, Helvetica, sans-serif !important; 
+        line-height: 1.5 !important; 
+        letter-spacing: 0.5px !important; 
     }
     </style>
+    <!-- FIM DO BLOCO CSS -->
+
 </head>
 <body>
-    <!-- Accessibility -->
-    <div id="accessibility"></div><!-- Define o botão -->
     
-    <!-- Define o botão -->
-    <button class="button" id="menu-button"><i class="fa fa-wheelchair"></i></button>
+    <!-- Conteúdo do Site Exemplo -->
+    <main id="main-content" role="main">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>Página Exemplo</h1>
+                    <h2>Usando Bootstrap, CSS, Script e Font-Awesome</h2>
+                    <p class="lead">Este texto serve para testar o aumento de fonte e os contrastes.</p>
+                    <button class="btn btn-primary mb-3">Clique Aqui</button>
+                    <div class="icon">
+                        <i class="fab fa-facebook fa-2x mx-2"></i>
+                        <i class="fab fa-twitter fa-2x mx-2"></i>
+                        <i class="fab fa-instagram fa-2x mx-2"></i>
+                        <i class="fab fa-linkedin fa-2x mx-2"></i>
+                    </div>
+                    <div class="mt-4">
+                        <a href="#">Link de exemplo para sublinhado</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Bloco 1</h5>
+                            <p class="card-text">Teste de cor e contraste em cartões.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Bloco 2</h5>
+                            <p class="card-text">Teste de leitura de tela.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Bloco 3</h5>
+                            <p class="card-text">Teste de inversão de cores (Negativo).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <!-- Define o menu de opções -->
-    <div class="dropdown" id="menu-options">
-        <div id="menu-title">Ferramentas de acessibilidade</div>
-        <a onclick="increaseText()"><i class="fas fa-text-height"></i> Aumentar texto</a>
-        <a onclick="resetText()"><i class="fas fa-sync-alt"></i> Redefinir texto</a>
-        <a onclick="decreaseText()"><i class="fas fa-text-height"></i> Diminuir texto</a>
-        <a onclick="toggleReadableFont()"><i class="fas fa-font"></i> Fonte legível</a>
-        <a onclick="tornarSiteCinza()"><i class="fas fa-barcode"></i> Escala de cinza</a>
-        <a onclick="toggleContrast()"><i class="fas fa-adjust"></i> Alto Contraste</a>
-        <a onclick="toggleNegative()"><i class="fas fa-eye"></i> Contraste Negativo</a>
-        <a onclick="toggleLight()"><i class="fas fa-sun"></i> Fundo claro</a>
-        <a onclick="toggleUnderline()"><i class="fas fa-underline"></i> Links Sublinhado</a>
-        <a onclick="leitordeTela()"><i class="fas fa-volume-up"></i> Leitor de tela</a>
-        <a onclick="resetSettings()"><i class="fas fa-sync-alt"></i> Redefinir</a>
+    <!-- INICIO DO BLOCO HTML/JS DE ACESSIBILIDADE -->
+    <div class="acessibilidade-container" id="acessibilidade-wrapper">
+        <div class="dropdown" id="menu-options">
+            <div id="menu-title">Acessibilidade</div>
+            <a onclick="increaseText()"><i class="fas fa-text-height"></i> Aumentar texto</a>
+            <a onclick="decreaseText()"><i class="fas fa-text-height"></i> Diminuir texto</a>
+            <a onclick="resetText()"><i class="fas fa-sync-alt"></i> Redefinir texto</a>
+            <a onclick="toggleReadableFont()"><i class="fas fa-font"></i> Fonte legível</a>
+            <a onclick="tornarSiteCinza()"><i class="fas fa-barcode"></i> Escala de cinza</a>
+            <a onclick="toggleContrast()"><i class="fas fa-adjust"></i> Alto Contraste</a>
+            <a onclick="toggleNegative()"><i class="fas fa-eye"></i> Contraste Negativo</a>
+            <a onclick="toggleLight()"><i class="fas fa-sun"></i> Fundo claro</a>
+            <a onclick="toggleUnderline()"><i class="fas fa-underline"></i> Sublinhar Links</a>
+            <a onclick="leitordeTela()"><i class="fas fa-volume-up"></i> Leitor de tela</a>
+            <a onclick="resetSettings()"><i class="fas fa-trash-restore"></i> Redefinir Tudo</a>
+        </div>
+        <button class="button-access" id="menu-button" aria-label="Abrir menu de acessibilidade">
+            <i class="fa fa-wheelchair"></i>
+        </button>
     </div>
 
-    <!-- Adiciona o script para exibir o menu de opções -->
+    <!-- Script de Acessibilidade -->
     <script>
-    // Obtém o botão e o menu de opções
-    var button = document.getElementById("menu-button");
-    var menu = document.getElementById("menu-options");
-
-    // Adiciona um evento de clique ao botão
-    button.addEventListener("click", function() {
-        // Verifica se o menu de opções está sendo exibido
-        if (menu.style.display === "none") {
-            // Exibe o menu de opções
-            menu.style.display = "block";
-        } else {
-            // Oculta o menu de opções
-            menu.style.display = "none";
-        }
-    });
-
-    // Tamanho da fonte padrão
-    var defaultFontSize = 100;
-    var fontSize = defaultFontSize;
-
-    function increaseText() {
-        fontSize += 10;
-        document.body.style.fontSize = fontSize + "%";
-        localStorage.setItem('fontSize', fontSize);
-    }
-
-    function resetText() {
-        fontSize = defaultFontSize;
-        document.body.style.fontSize = fontSize + "%";
-        localStorage.setItem('fontSize', fontSize);
-    }
-
-    function decreaseText() {
-        fontSize -= 10;
-        document.body.style.fontSize = fontSize + "%";
-        localStorage.setItem('fontSize', fontSize);
-    }
-
-    function tornarSiteCinza() {
-        var element = document.body;
-        element.classList.toggle("grayscale");
-    }
-
-    function toggleContrast() {
-        var element = document.body;
-        element.classList.toggle("contrast");
-    }
-
-    function toggleNegative() {
-        var element = document.body;
-        element.classList.toggle("negative");
-    }
-
-    function toggleLight() {
-        var element = document.body;
-        element.classList.toggle("light");
-    }
-
-    function toggleUnderline() {
-        var element = document.body;
-        element.classList.toggle("underline-links");
-    }
-
-    function toggleReadableFont() {
-        var element = document.body;
-        element.classList.toggle("readable-font");
-    }
-
-    // Função leitordeTela
-    function leitordeTela() {
-        // Seleciona o elemento principal
-        let mainElement = document.getElementById('main-content');
-
-        // Obtém todo o texto dentro do elemento principal
-        let text = mainElement.innerText;
-
-        // Divide o texto em palavras
-        let words = text.split(' ');
-
-        // Índice da palavra atual
-        let currentWordIndex = 0;
-
-        // Função para remover o destaque de todas as palavras
-        function removeHighlight() {
-            mainElement.innerHTML = mainElement.innerHTML.replace(
-                /<span style="border: 1px solid black; background-color: yellow;">(.*?)<\/span>/g, '$1');
+    document.addEventListener("DOMContentLoaded", function() {
+        // --- 1. PREPARAÇÃO DO AMBIENTE ---
+        var containerAcessibilidade = document.getElementById("acessibilidade-wrapper");
+        
+        // Move o Widget para o final do body para garantir que ele fique separado do resto
+        if (containerAcessibilidade && containerAcessibilidade.parentNode !== document.body) {
+            document.body.appendChild(containerAcessibilidade);
         }
 
-        // Função para destacar uma palavra em amarelo
-        function highlightWord(word) {
-            let innerHTML = mainElement.innerHTML;
-            let index = innerHTML.indexOf(word);
-            if (index >= 0) {
-                innerHTML = innerHTML.substring(0, index) +
-                    "<span style='border: 1px solid black; background-color: yellow;'>" + innerHTML.substring(index,
-                        index + word.length) + "</span>" + innerHTML.substring(index + word.length);
-                mainElement.innerHTML = innerHTML;
+        // --- 2. LÓGICA DO MENU (Abrir/Fechar) ---
+        var button = document.getElementById("menu-button");
+        var menu = document.getElementById("menu-options");
+        var isMenuVisible = false;
+
+        button.addEventListener("click", function(e) {
+            e.stopPropagation();
+            if (menu.style.display === "block") {
+                menu.style.display = ""; 
+                isMenuVisible = false;
+            } else {
+                menu.style.display = "block";
+                isMenuVisible = true;
             }
+        });
+
+        document.addEventListener("click", function(event) {
+            if (isMenuVisible && !containerAcessibilidade.contains(event.target)) {
+                menu.style.display = "";
+                isMenuVisible = false;
+            }
+        });
+
+        // --- 3. LÓGICA DE FILTROS (Aplica em tudo MENOS no botão) ---
+        function getSiteElements() {
+            // Seleciona tudo que é filho direto do body, exceto o widget e tags de script/style
+            return document.querySelectorAll('body > *:not(#acessibilidade-wrapper):not(script):not(style):not(link)');
         }
 
-        // Função para falar uma palavra e destacá-la
-        function speakAndHighlightWord() {
-            if (currentWordIndex < words.length) {
-                // Remove o destaque das palavras anteriores
-                removeHighlight();
+        var currentFontSize = 100;
 
-                // Destaca as próximas quatro palavras
-                for (let i = 0; i < 4; i++) {
-                    if (currentWordIndex + i < words.length) {
-                        highlightWord(words[currentWordIndex + i]);
-                    }
+        window.toggleFilter = function(filterClass) {
+            var elements = getSiteElements();
+            
+            if (filterClass === 'acessibilidade-negative') {
+                elements.forEach(el => {
+                    el.classList.remove('acessibilidade-grayscale', 'acessibilidade-contrast');
+                });
+                
+                var isActive = false;
+                elements.forEach(el => {
+                    isActive = el.classList.toggle(filterClass);
+                });
+
+                // Pinta o fundo do body de preto para combinar com o site negativo
+                document.body.style.backgroundColor = isActive ? '#000' : '';
+            } else {
+                elements.forEach(el => el.classList.remove('acessibilidade-negative'));
+                document.body.style.backgroundColor = '';
+
+                if (filterClass === 'acessibilidade-grayscale') {
+                    elements.forEach(el => el.classList.remove('acessibilidade-contrast'));
+                }
+                if (filterClass === 'acessibilidade-contrast') {
+                    elements.forEach(el => el.classList.remove('acessibilidade-grayscale'));
                 }
 
-                // Cria uma nova instância de SpeechSynthesisUtterance
-                let utterance = new SpeechSynthesisUtterance(words.slice(currentWordIndex, currentWordIndex + 4).join(
-                    ' '));
+                elements.forEach(el => el.classList.toggle(filterClass));
+            }
+            saveState();
+        };
 
-                // Fala as palavras usando a API de síntese de fala
-                window.speechSynthesis.speak(utterance);
+        window.toggleEffect = function(effectClass) {
+            var elements = getSiteElements();
+            elements.forEach(el => el.classList.toggle(effectClass));
+            saveState();
+        };
 
-                // Incrementa o índice da palavra atual
-                currentWordIndex += 4;
+        window.fontManager = function(action) {
+            if (action === 'increase') currentFontSize += 10;
+            if (action === 'decrease') currentFontSize -= 10;
+            if (action === 'reset') currentFontSize = 100;
 
-                // Chama esta função novamente quando as palavras atuais terminarem de ser faladas
-                utterance.onend = function(event) {
-                    setTimeout(speakAndHighlightWord, 100); // Adiciona um atraso de 100ms
-                };
+            if (currentFontSize < 70) currentFontSize = 70;
+            if (currentFontSize > 200) currentFontSize = 200;
+
+            document.body.style.fontSize = currentFontSize + "%";
+            
+            // Protege o ícone do botão de mudar de tamanho
+            var btnIcon = document.querySelector('.button-access');
+            if(btnIcon) btnIcon.style.fontSize = "16px"; 
+
+            localStorage.setItem('acc_fontSize', currentFontSize);
+        };
+
+        window.leitordeTela = function() {
+            window.speechSynthesis.cancel();
+            var text = document.body.innerText;
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            window.speechSynthesis.speak(utterance);
+        };
+
+        window.resetSettings = function() {
+            var elements = getSiteElements();
+            elements.forEach(el => {
+                el.classList.remove(
+                    'acessibilidade-grayscale', 'acessibilidade-contrast', 
+                    'acessibilidade-negative', 'acessibilidade-light-mode', 
+                    'acessibilidade-underline', 'acessibilidade-font'
+                );
+            });
+            document.body.style.backgroundColor = '';
+            document.body.style.fontSize = '';
+            currentFontSize = 100;
+            localStorage.removeItem('acc_classes');
+            localStorage.removeItem('acc_fontSize');
+            window.speechSynthesis.cancel();
+        };
+
+        // Atalhos
+        window.tornarSiteCinza = function() { toggleFilter('acessibilidade-grayscale'); };
+        window.toggleContrast = function() { toggleFilter('acessibilidade-contrast'); };
+        window.toggleNegative = function() { toggleFilter('acessibilidade-negative'); };
+        window.toggleLight = function() { toggleEffect('acessibilidade-light-mode'); };
+        window.toggleUnderline = function() { toggleEffect('acessibilidade-underline'); };
+        window.toggleReadableFont = function() { toggleEffect('acessibilidade-font'); };
+        window.increaseText = function() { fontManager('increase'); };
+        window.decreaseText = function() { fontManager('decrease'); };
+        window.resetText = function() { fontManager('reset'); };
+
+        // --- 4. CARREGAR ESTADO ---
+        function saveState() {
+            var activeClasses = [];
+            var sampleElement = document.querySelector('body > div:not(#acessibilidade-wrapper)'); 
+            if(sampleElement) {
+                sampleElement.classList.forEach(cls => {
+                    if(cls.startsWith('acessibilidade-')) activeClasses.push(cls);
+                });
+                localStorage.setItem('acc_classes', JSON.stringify(activeClasses));
             }
         }
 
-        // Inicia o leitor de tela
-        speakAndHighlightWord();
-    }
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
+        var savedSize = localStorage.getItem('acc_fontSize');
+        if (savedSize) {
+            currentFontSize = parseInt(savedSize);
+            document.body.style.fontSize = currentFontSize + "%";
         }
-        return "";
-    }
 
-    function toggle(className) {
-        var element = document.body;
-        var isActive = element.classList.toggle(className);
-        setCookie(className, isActive ? 'true' : 'false', 30);
-    }
-
-    // Função para redefinir as configurações
-    function resetSettings() {
-        ['grayscale', 'contrast', 'negative', 'light', 'underline-links', 'readable-font'].forEach(function(className) {
-            document.body.classList.remove(className);
-            setCookie(className, 'false', 30);
-            fontSize = defaultFontSize;
-            document.body.style.fontSize = fontSize + "%";
-        });
-    }
-
-    window.onload = function() {
-        ['grayscale', 'contrast', 'negative', 'light', 'underline-links', 'readable-font'].forEach(function(
-            className) {
-            if (getCookie(className) === 'true') {
-                document.body.classList.add(className);
-            }
-        });
-    }
+        var savedClasses = JSON.parse(localStorage.getItem('acc_classes') || "[]");
+        if (savedClasses.length > 0) {
+            savedClasses.forEach(cls => {
+                if (cls.includes('filter') || cls.includes('negative')) toggleFilter(cls);
+                else toggleEffect(cls);
+            });
+        }
+    });
     </script>
+    
+    <!-- VLibras -->
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
@@ -329,30 +359,9 @@
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
-        <main id="main-content" role="main">
-    <div class="container">
 
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>Página Exemplo</h1>
-                <h2>Usando Bootstrap, CSS, Script e Font-Awesome</h2>
-                <button class="btn btn-primary">Clique Aqui</button>
-                <div class="icon">
-                    <i class="fab fa-facebook"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-linkedin"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-        </main>
     <!-- Bootstrap CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Custom Script -->
-    <script>
-        // Escreva seu código JavaScript aqui
-    </script>
 </body>
 </html>
