@@ -3,365 +3,467 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Exemplo - Acessibilidade</title>
-    <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Acessibilidade Portal Modelo | Solução Open Source</title>
     
-    <!-- Custom CSS (Acessibilidade) -->
-    <!-- INICIO DO BLOCO CSS DE ACESSIBILIDADE -->
+    <!-- Fontes Modernas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-    /* ============================================================
-       1. ESTILOS DO WIDGET (BOTÃO E MENU) - Z-INDEX MÁXIMO
-       ============================================================ */
-    .acessibilidade-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 2147483647; /* Garante que fique acima de tudo */
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        filter: none !important; /* Protege o botão dos filtros */
-    }
-
-    .button-access {
-        background-color: #3288F2;
-        border: none;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        transition: transform 0.2s, background-color 0.2s;
-    }
-
-    .button-access:hover {
-        transform: scale(1.1);
-        background-color: #1c75e2;
-    }
-
-    .button-access .fa { font-size: 30px; }
-
-    .dropdown {
-        display: none;
-        background-color: #f1f1f1;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 0;
-        margin-bottom: 15px;
-        width: 220px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        overflow: hidden;
-    }
-
-    /* Hover apenas em telas grandes */
-    @media (min-width: 768px) {
-        .acessibilidade-container:hover .dropdown {
-            display: block;
+        :root {
+            --primary: #3288F2;
+            --secondary: #0a2540;
+            --accent: #00d4ff;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
         }
-    }
 
-    .dropdown a {
-        display: flex;
-        align-items: center;
-        padding: 10px 15px;
-        text-decoration: none;
-        color: #333;
-        cursor: pointer;
-        border-bottom: 1px solid #e0e0e0;
-        background: #fff;
-        transition: background 0.2s;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-    .dropdown a:hover { background-color: #e6e6e6; }
-    .dropdown a:last-child { border-bottom: none; }
-    .dropdown i { width: 25px; text-align: center; margin-right: 10px; color: #3288F2; }
-    #menu-title { background-color: #3288F2; color: white; padding: 10px; font-weight: bold; text-align: center; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            background-color: #f8fafc;
+            overflow-x: hidden;
+            font-size: 16px;
+            line-height: 1.6;
+        }
 
-    /* ============================================================
-       2. CLASSES DE EFEITO (Aplicadas aos elementos do site)
-       ============================================================ */
-    
-    .acessibilidade-grayscale { filter: grayscale(100%) !important; }
-    .acessibilidade-contrast { filter: contrast(200%) !important; }
-    
-    /* O negativo precisa inverter e garantir fundo branco para virar preto */
-    .acessibilidade-negative { 
-        filter: invert(100%) !important; 
-        background-color: #fff; 
-    }
+        /* --- Elementos de Fundo (Blobs) --- */
+        .blob-cont {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
 
-    /* Modificadores de Texto e Cor */
-    .acessibilidade-light-mode { background-color: #FFF !important; color: #000 !important; }
-    .acessibilidade-light-mode * { background-color: #FFF !important; color: #000 !important; border-color: #000 !important; }
-    
-    .acessibilidade-underline a { text-decoration: underline !important; }
-    
-    .acessibilidade-font { 
-        font-family: Arial, Helvetica, sans-serif !important; 
-        line-height: 1.5 !important; 
-        letter-spacing: 0.5px !important; 
-    }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #3288F2; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .blob-2 { bottom: -10%; right: -10%; width: 400px; height: 400px; background: #00d4ff; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 300px; height: 300px; background: #a29bfe; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation-duration: 15s; opacity: 0.4; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(30px, 50px) rotate(10deg); }
+        }
+
+        /* --- Layout & Grid --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        /* --- Tipografia --- */
+        h1, h2, h3 { line-height: 1.2; font-weight: 700; color: var(--secondary); }
+        h1 { font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-size: 2.5rem; margin-bottom: 40px; text-align: center; }
+        p { margin-bottom: 20px; color: var(--text-light); }
+
+        /* --- Componentes --- */
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(50, 136, 242, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(50, 136, 242, 0.4);
+            background: #1a6fd8;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateY(-10px); }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        .hero-content { max-width: 800px; z-index: 1; }
+        .hero-badge {
+            background: rgba(50, 136, 242, 0.1);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* --- Features Grid --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: rgba(50, 136, 242, 0.1);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        .card:hover .feature-icon { background: var(--primary); color: white; transform: rotateY(180deg); }
+
+        /* --- Code Area --- */
+        .install-section { background: var(--white); }
+        .code-window {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .window-header {
+            background: #2d2d2d;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dots span {
+            display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px;
+        }
+        .dots span:nth-child(1) { background: #ff5f56; }
+        .dots span:nth-child(2) { background: #ffbd2e; }
+        .dots span:nth-child(3) { background: #27c93f; }
+
+        .copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: none; color: #fff; padding: 5px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 0.85rem; transition: background 0.2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .code-content {
+            padding: 25px;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .tag { color: #569cd6; }
+        .attr { color: #9cdcfe; }
+        .val { color: #ce9178; }
+
+        /* --- Developer Section --- */
+        .dev-section { position: relative; overflow: hidden; }
+        .dev-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .dev-img-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .dev-img {
+            width: 100%; height: 100%; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            object-fit: cover; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: morph 8s ease-in-out infinite;
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .social-icons a {
+            display: inline-flex; width: 45px; height: 45px; background: white;
+            border-radius: 50%; align-items: center; justify-content: center;
+            color: var(--secondary); font-size: 1.2rem; margin-right: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; transition: all 0.3s;
+        }
+        .social-icons a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+        /* --- Donation & Support --- */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .support-card {
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: white;
+        }
+        .pix-key {
+            background: #f0f4f8; padding: 10px; border-radius: 8px;
+            font-family: monospace; font-weight: bold; color: var(--primary);
+            display: block; margin: 10px 0; word-break: break-all;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--secondary);
+            color: rgba(255,255,255,0.7);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+        footer p { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .hero { padding-top: 100px; padding-bottom: 50px; min-height: auto; }
+            .dev-profile { flex-direction: column; text-align: center; }
+        }
+        
+        /* Onda SVG */
+        .wave-bottom {
+            position: absolute; bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
+        }
+        .wave-bottom svg {
+            position: relative; display: block; width: calc(157% + 1.3px); height: 106px;
+        }
+        .wave-bottom .shape-fill { fill: #ffffff; }
+
     </style>
-    <!-- FIM DO BLOCO CSS -->
-
 </head>
 <body>
-    
-    <!-- Conteúdo do Site Exemplo -->
-    <main id="main-content" role="main">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h1>Página Exemplo</h1>
-                    <h2>Usando Bootstrap, CSS, Script e Font-Awesome</h2>
-                    <p class="lead">Este texto serve para testar o aumento de fonte e os contrastes.</p>
-                    <button class="btn btn-primary mb-3">Clique Aqui</button>
-                    <div class="icon">
-                        <i class="fab fa-facebook fa-2x mx-2"></i>
-                        <i class="fab fa-twitter fa-2x mx-2"></i>
-                        <i class="fab fa-instagram fa-2x mx-2"></i>
-                        <i class="fab fa-linkedin fa-2x mx-2"></i>
-                    </div>
-                    <div class="mt-4">
-                        <a href="#">Link de exemplo para sublinhado</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-5">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Bloco 1</h5>
-                            <p class="card-text">Teste de cor e contraste em cartões.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Bloco 2</h5>
-                            <p class="card-text">Teste de leitura de tela.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Bloco 3</h5>
-                            <p class="card-text">Teste de inversão de cores (Negativo).</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
 
-    <!-- INICIO DO BLOCO HTML/JS DE ACESSIBILIDADE -->
-    <div class="acessibilidade-container" id="acessibilidade-wrapper">
-        <div class="dropdown" id="menu-options">
-            <div id="menu-title">Acessibilidade</div>
-            <a onclick="increaseText()"><i class="fas fa-text-height"></i> Aumentar texto</a>
-            <a onclick="decreaseText()"><i class="fas fa-text-height"></i> Diminuir texto</a>
-            <a onclick="resetText()"><i class="fas fa-sync-alt"></i> Redefinir texto</a>
-            <a onclick="toggleReadableFont()"><i class="fas fa-font"></i> Fonte legível</a>
-            <a onclick="tornarSiteCinza()"><i class="fas fa-barcode"></i> Escala de cinza</a>
-            <a onclick="toggleContrast()"><i class="fas fa-adjust"></i> Alto Contraste</a>
-            <a onclick="toggleNegative()"><i class="fas fa-eye"></i> Contraste Negativo</a>
-            <a onclick="toggleLight()"><i class="fas fa-sun"></i> Fundo claro</a>
-            <a onclick="toggleUnderline()"><i class="fas fa-underline"></i> Sublinhar Links</a>
-            <a onclick="leitordeTela()"><i class="fas fa-volume-up"></i> Leitor de tela</a>
-            <a onclick="resetSettings()"><i class="fas fa-trash-restore"></i> Redefinir Tudo</a>
-        </div>
-        <button class="button-access" id="menu-button" aria-label="Abrir menu de acessibilidade">
-            <i class="fa fa-wheelchair"></i>
-        </button>
+    <!-- Elementos de Fundo Animados -->
+    <div class="blob-cont">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
-    <!-- Script de Acessibilidade -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // --- 1. PREPARAÇÃO DO AMBIENTE ---
-        var containerAcessibilidade = document.getElementById("acessibilidade-wrapper");
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-content">
+            <span class="hero-badge">Versão CDN v2.0</span>
+            <h1>Acessibilidade Digital Simplificada</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 40px;">
+                Uma solução open-source, moderna e em conformidade com o <strong>e-MAG</strong>. 
+                Instale em menos de 1 minuto em qualquer site ou Portal Modelo.
+            </p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#instalacao" class="btn">Instalar Agora</a>
+                <a href="#demonstracao" class="btn" style="background: white; color: var(--primary);">Ver Demo</a>
+            </div>
+            
+            <p class="mt-4" style="font-size: 0.9rem; opacity: 0.8;">
+                <i class="fas fa-check-circle"></i> Sem arquivos para baixar &nbsp;
+                <i class="fas fa-check-circle"></i> Atualização Automática
+            </p>
+        </div>
+    </section>
+
+    <!-- ÁREA DE DEMONSTRAÇÃO E TESTE -->
+    <section id="demonstracao" style="background: white;">
+        <div class="container">
+            <h2>Veja Funcionar na Prática</h2>
+            <p class="text-center" style="max-width: 700px; margin: 0 auto 50px auto;">
+                O widget já está ativo nesta página! Olhe para o canto inferior direito e interaja com o botão flutuante. Teste aumentar a fonte deste texto ou inverter as cores.
+            </p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="feature-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Contraste Inteligente</h3>
+                    <p>Modo Escala de Cinza, Alto Contraste e o exclusivo <strong>Contraste Negativo</strong> que não quebra o layout do site.</p>
+                </div>
+                <div class="card">
+                    <div class="feature-icon"><i class="fas fa-text-height"></i></div>
+                    <h3>Controle de Texto</h3>
+                    <p>Permita que o usuário aumente, diminua ou use uma fonte mais legível sem distorcer sua página.</p>
+                </div>
+                <div class="card">
+                    <div class="feature-icon"><i class="fas fa-keyboard"></i></div>
+                    <h3>Atalhos & Leitura</h3>
+                    <p>Suporte completo a leitura de tela (TTS) e atalhos de teclado (<code>Alt</code> + <code>Shift</code>) para navegação ágil.</p>
+                </div>
+            </div>
+        </div>
         
-        // Move o Widget para o final do body para garantir que ele fique separado do resto
-        if (containerAcessibilidade && containerAcessibilidade.parentNode !== document.body) {
-            document.body.appendChild(containerAcessibilidade);
-        }
-
-        // --- 2. LÓGICA DO MENU (Abrir/Fechar) ---
-        var button = document.getElementById("menu-button");
-        var menu = document.getElementById("menu-options");
-        var isMenuVisible = false;
-
-        button.addEventListener("click", function(e) {
-            e.stopPropagation();
-            if (menu.style.display === "block") {
-                menu.style.display = ""; 
-                isMenuVisible = false;
-            } else {
-                menu.style.display = "block";
-                isMenuVisible = true;
-            }
-        });
-
-        document.addEventListener("click", function(event) {
-            if (isMenuVisible && !containerAcessibilidade.contains(event.target)) {
-                menu.style.display = "";
-                isMenuVisible = false;
-            }
-        });
-
-        // --- 3. LÓGICA DE FILTROS (Aplica em tudo MENOS no botão) ---
-        function getSiteElements() {
-            // Seleciona tudo que é filho direto do body, exceto o widget e tags de script/style
-            return document.querySelectorAll('body > *:not(#acessibilidade-wrapper):not(script):not(style):not(link)');
-        }
-
-        var currentFontSize = 100;
-
-        window.toggleFilter = function(filterClass) {
-            var elements = getSiteElements();
-            
-            if (filterClass === 'acessibilidade-negative') {
-                elements.forEach(el => {
-                    el.classList.remove('acessibilidade-grayscale', 'acessibilidade-contrast');
-                });
-                
-                var isActive = false;
-                elements.forEach(el => {
-                    isActive = el.classList.toggle(filterClass);
-                });
-
-                // Pinta o fundo do body de preto para combinar com o site negativo
-                document.body.style.backgroundColor = isActive ? '#000' : '';
-            } else {
-                elements.forEach(el => el.classList.remove('acessibilidade-negative'));
-                document.body.style.backgroundColor = '';
-
-                if (filterClass === 'acessibilidade-grayscale') {
-                    elements.forEach(el => el.classList.remove('acessibilidade-contrast'));
-                }
-                if (filterClass === 'acessibilidade-contrast') {
-                    elements.forEach(el => el.classList.remove('acessibilidade-grayscale'));
-                }
-
-                elements.forEach(el => el.classList.toggle(filterClass));
-            }
-            saveState();
-        };
-
-        window.toggleEffect = function(effectClass) {
-            var elements = getSiteElements();
-            elements.forEach(el => el.classList.toggle(effectClass));
-            saveState();
-        };
-
-        window.fontManager = function(action) {
-            if (action === 'increase') currentFontSize += 10;
-            if (action === 'decrease') currentFontSize -= 10;
-            if (action === 'reset') currentFontSize = 100;
-
-            if (currentFontSize < 70) currentFontSize = 70;
-            if (currentFontSize > 200) currentFontSize = 200;
-
-            document.body.style.fontSize = currentFontSize + "%";
-            
-            // Protege o ícone do botão de mudar de tamanho
-            var btnIcon = document.querySelector('.button-access');
-            if(btnIcon) btnIcon.style.fontSize = "16px"; 
-
-            localStorage.setItem('acc_fontSize', currentFontSize);
-        };
-
-        window.leitordeTela = function() {
-            window.speechSynthesis.cancel();
-            var text = document.body.innerText;
-            var utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'pt-BR';
-            window.speechSynthesis.speak(utterance);
-        };
-
-        window.resetSettings = function() {
-            var elements = getSiteElements();
-            elements.forEach(el => {
-                el.classList.remove(
-                    'acessibilidade-grayscale', 'acessibilidade-contrast', 
-                    'acessibilidade-negative', 'acessibilidade-light-mode', 
-                    'acessibilidade-underline', 'acessibilidade-font'
-                );
-            });
-            document.body.style.backgroundColor = '';
-            document.body.style.fontSize = '';
-            currentFontSize = 100;
-            localStorage.removeItem('acc_classes');
-            localStorage.removeItem('acc_fontSize');
-            window.speechSynthesis.cancel();
-        };
-
-        // Atalhos
-        window.tornarSiteCinza = function() { toggleFilter('acessibilidade-grayscale'); };
-        window.toggleContrast = function() { toggleFilter('acessibilidade-contrast'); };
-        window.toggleNegative = function() { toggleFilter('acessibilidade-negative'); };
-        window.toggleLight = function() { toggleEffect('acessibilidade-light-mode'); };
-        window.toggleUnderline = function() { toggleEffect('acessibilidade-underline'); };
-        window.toggleReadableFont = function() { toggleEffect('acessibilidade-font'); };
-        window.increaseText = function() { fontManager('increase'); };
-        window.decreaseText = function() { fontManager('decrease'); };
-        window.resetText = function() { fontManager('reset'); };
-
-        // --- 4. CARREGAR ESTADO ---
-        function saveState() {
-            var activeClasses = [];
-            var sampleElement = document.querySelector('body > div:not(#acessibilidade-wrapper)'); 
-            if(sampleElement) {
-                sampleElement.classList.forEach(cls => {
-                    if(cls.startsWith('acessibilidade-')) activeClasses.push(cls);
-                });
-                localStorage.setItem('acc_classes', JSON.stringify(activeClasses));
-            }
-        }
-
-        var savedSize = localStorage.getItem('acc_fontSize');
-        if (savedSize) {
-            currentFontSize = parseInt(savedSize);
-            document.body.style.fontSize = currentFontSize + "%";
-        }
-
-        var savedClasses = JSON.parse(localStorage.getItem('acc_classes') || "[]");
-        if (savedClasses.length > 0) {
-            savedClasses.forEach(cls => {
-                if (cls.includes('filter') || cls.includes('negative')) toggleFilter(cls);
-                else toggleEffect(cls);
-            });
-        }
-    });
-    </script>
-    
-    <!-- VLibras -->
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
+        <!-- Onda de transição -->
+        <div class="wave-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#f8fafc"></path>
+            </svg>
         </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    </section>
+
+    <!-- INSTALAÇÃO (O PONTO ALTO) -->
+    <section id="instalacao">
+        <div class="container">
+            <h2>Instalação em 1 Linha</h2>
+            <p class="text-center">Esqueça baixar zips e editar CSS. Use o poder do CDN.</p>
+            
+            <div class="code-window">
+                <div class="window-header">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <button class="copy-btn" onclick="copyCode()">Copiar Código</button>
+                </div>
+                <div class="code-content">
+                    <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <p><strong>Onde colocar?</strong> Apenas cole antes de fechar a tag <code>&lt;/body&gt;</code> do seu site.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE O DESENVOLVEDOR -->
+    <section class="dev-section" style="background: white;">
+        <div class="container">
+            <div class="dev-profile">
+                <div class="dev-img-wrapper">
+                    <img src="https://github.com/delmardelima.png" alt="Delmar de Lima" class="dev-img">
+                </div>
+                <div style="max-width: 600px; text-align: left;">
+                    <span class="hero-badge">O Criador</span>
+                    <h3>Delmar de Lima</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-dark);">
+                        <em>"Tecnologia deve ser uma ponte, não uma barreira."</em>
+                    </p>
+                    <p>
+                        Não sou apenas um programador; sou Contador, Técnico Jurídico e proprietário da <strong><a href="https://amil.cnt.br" target="_blank" style="color: var(--primary); text-decoration: none;">Amil Contabilidade</a></strong>. 
+                        Este projeto nasceu de uma necessidade real na Câmara Municipal de Apuí/AM. Como entusiasta da tecnologia, desenvolvi esta solução e decidi abri-la para a comunidade, facilitando a vida de gestores públicos e cidadãos.
+                    </p>
+                    <div class="social-icons">
+                        <a href="https://github.com/delmardelima" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com/cortesdevoficial" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.fb.com/cortesdevoficial" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://bit.ly/SeguirCortesDev" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUPORTE E DOAÇÃO -->
+    <section>
+        <div class="container">
+            <h2>Mantenha o Projeto Vivo</h2>
+            <div class="support-grid">
+                
+                <div class="card support-card">
+                    <div class="feature-icon" style="margin: 0 auto 20px auto; background: #e0f2fe; color: #0284c7;"><i class="fas fa-headset"></i></div>
+                    <h3>Suporte & Dúvidas</h3>
+                    <p>Teve dificuldade na instalação? Estou disponível para ajudar.</p>
+                    <a href="https://wa.me/5597991442486" class="btn" style="width: 100%;"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+                </div>
+
+                <div class="card support-card">
+                    <div class="feature-icon" style="margin: 0 auto 20px auto; background: #dcfce7; color: #16a34a;"><i class="fas fa-coffee"></i></div>
+                    <h3>Faça uma Doação</h3>
+                    <p>Ajude a manter as atualizações e o servidor CDN ativos.</p>
+                    <span class="pix-key">Email: delmar.apui@gmail.com</span>
+                    <span class="pix-key">Cel: (97) 99144-2486</span>
+                    <button class="btn" style="background: #16a34a; width: 100%;" onclick="alert('Chaves PIX exibidas acima!')">Doar via PIX</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Delmar de Lima. Open Source (MIT License).</p>
+            <p style="font-size: 0.8rem; opacity: 0.5;">Desenvolvido com paixão em Apuí/AM para todo o Brasil.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE CÓPIA -->
     <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
+        function copyCode() {
+            const code = '<script src="https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js"><\/script>';
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                btn.style.background = '#27c93f';
+                setTimeout(() => {
+                    btn.innerText = 'Copiar Código';
+                    btn.style.background = 'rgba(255,255,255,0.1)';
+                }, 2000);
+            });
+        }
     </script>
 
-    <!-- Bootstrap CDN -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- ======================================================= -->
+    <!-- WIDGET DE ACESSIBILIDADE -->
+    <!-- ======================================================= -->
+    <script src="https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js"></script>
+
 </body>
 </html>
