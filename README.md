@@ -272,6 +272,20 @@ Agora, role até o final do arquivo e encontre a tag de fechamento \</body\>. **
     \</script\>  
     \<\!-- FIM WIDGET ACESSIBILIDADE \--\>
 
+# **Instalação Rápida (Via CDN)**
+
+Para instalar o Botão de Acessibilidade no seu site, você **não precisa baixar nada**. Basta copiar a linha de código abaixo e colar antes do fechamento da tag \</body\> do seu site.
+
+Copie e cole este código:
+
+\<script src="\[https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js\](https://cdn.jsdelivr.net/gh/delmardelima/acessibilidade-portal-modelo@main/acessibilidade.js)"\>\</script\>
+
+### **Vantagens deste método:**
+
+* **Instalação em segundos:** Apenas uma linha de código.  
+* **Atualização automática:** Se lançarmos melhorias, seu site recebe automaticamente.  
+* **Sem conflitos:** O script cria seu próprio CSS e HTML de forma isolada.
+
 ### **9\. Salvar e Ativar**
 
 Após colar os códigos, clique no botão **Salvar** (ícone de disquete ou botão verde) localizado no canto superior da tela.
