@@ -36,7 +36,6 @@
             display: none; background-color: #f1f1f1; border: 1px solid #ccc;
             border-radius: 5px; padding: 0; margin-bottom: 15px; width: 280px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden;
-            /* Garante que o menu fique logo acima do botão para facilitar o movimento do mouse */
             margin-bottom: 10px; 
         }
         
@@ -56,6 +55,14 @@
 
         #menu-title { background-color: #3288F2; color: white; padding: 10px; font-weight: bold; text-align: center; }
 
+        /* Estilo para o link de créditos */
+        .credits-link {
+            display: block; text-align: center; font-size: 11px; color: #666; 
+            padding: 8px; text-decoration: none; background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+        .credits-link:hover { color: #3288F2; text-decoration: underline; background-color: #f0f0f0; }
+
         /* Classes de Efeito */
         .acessibilidade-grayscale { filter: grayscale(100%) !important; }
         .acessibilidade-contrast { filter: contrast(200%) !important; }
@@ -69,7 +76,7 @@
     document.head.appendChild(style);
 
     // =================================================================
-    // 3. INJEÇÃO DE HTML (Widget com Atalhos)
+    // 3. INJEÇÃO DE HTML (Widget com Créditos)
     // =================================================================
     var widgetHTML = `
         <div class="dropdown-access" id="menu-options-access">
@@ -119,6 +126,11 @@
                 <span><i class="fas fa-trash-restore"></i> Redefinir Tudo</span>
                 <span class="access-key">Alt+Shft+R</span>
             </a>
+
+            <!-- LINK DE CRÉDITOS AO DESENVOLVEDOR -->
+            <a href="https://github.com/delmardelima/acessibilidade-portal-modelo" target="_blank" class="credits-link" title="Ver projeto no GitHub">
+                Desenvolvido por: Delmar de Lima
+            </a>
         </div>
         <button class="button-access" id="menu-button-access" aria-label="Abrir menu de acessibilidade (Alt + Shift + M)">
             <i class="fa fa-wheelchair"></i>
@@ -137,26 +149,22 @@
     }
 
     // =================================================================
-    // 4. LÓGICA DO SISTEMA (INTERAÇÃO HÍBRIDA)
+    // 4. LÓGICA DO SISTEMA (Híbrida)
     // =================================================================
     
     setTimeout(function() {
         var btn = document.getElementById("menu-button-access");
         var menu = document.getElementById("menu-options-access");
-        
-        // Timer para controlar o atraso de fechamento
         var hideTimeout = null; 
         var isMenuOpen = false;
 
-        // --- FUNÇÕES DE CONTROLE VISUAL ---
         function openMenu() {
-            clearTimeout(hideTimeout); // Cancela fechamento pendente se houver
+            clearTimeout(hideTimeout);
             menu.style.display = "block";
             isMenuOpen = true;
         }
 
         function closeMenu() {
-            // Dá um atraso de 300ms. Se o usuário voltar o mouse nesse tempo, cancelamos.
             hideTimeout = setTimeout(function() {
                 menu.style.display = "none";
                 isMenuOpen = false;
@@ -165,7 +173,6 @@
 
         function toggleMenu() {
             if (isMenuOpen) {
-                // Se for fechar via clique, fecha imediato sem delay
                 clearTimeout(hideTimeout);
                 menu.style.display = "none";
                 isMenuOpen = false;
@@ -174,27 +181,15 @@
             }
         }
 
-        // --- EVENTOS DO MOUSE (HOVER INTELIGENTE) ---
-        
-        // 1. Entrou no Botão -> Abre
+        // Eventos
         btn.addEventListener("mouseenter", openMenu);
-        
-        // 2. Saiu do Botão -> Agenda fechamento (exceto se entrar no menu logo em seguida)
         btn.addEventListener("mouseleave", closeMenu);
-
-        // 3. Entrou no Menu -> Cancela fechamento (mantém aberto)
         menu.addEventListener("mouseenter", openMenu);
-
-        // 4. Saiu do Menu -> Agenda fechamento
         menu.addEventListener("mouseleave", closeMenu);
-
-        // --- EVENTO DE CLIQUE (MOBILE/DESKTOP) ---
         btn.addEventListener("click", function(e) {
             e.stopPropagation();
-            toggleMenu(); // Permite clicar para fechar ou abrir
+            toggleMenu();
         });
-
-        // Fecha ao clicar fora (para mobile principalmente)
         document.addEventListener("click", function(e) {
             if (isMenuOpen && !container.contains(e.target)) {
                 clearTimeout(hideTimeout);
@@ -203,7 +198,7 @@
             }
         });
 
-        // --- MANIPULAÇÃO DO DOM ---
+        // Funções de Acessibilidade
         function getElements() {
             return document.querySelectorAll('body > *:not(#acessibilidade-wrapper):not(script):not(style):not(link)');
         }
@@ -216,14 +211,11 @@
                 els.forEach(el => el.classList.remove('acessibilidade-grayscale', 'acessibilidade-contrast'));
                 var active = false;
                 els.forEach(el => active = el.classList.toggle(cls));
-                
                 if (active) document.body.classList.add('acessibilidade-global-negative');
                 else document.body.classList.remove('acessibilidade-global-negative');
-
             } else {
                 els.forEach(el => el.classList.remove('acessibilidade-negative'));
                 document.body.classList.remove('acessibilidade-global-negative');
-                
                 if(cls === 'acessibilidade-grayscale') els.forEach(el => el.classList.remove('acessibilidade-contrast'));
                 if(cls === 'acessibilidade-contrast') els.forEach(el => el.classList.remove('acessibilidade-grayscale'));
                 els.forEach(el => el.classList.toggle(cls));
@@ -240,10 +232,8 @@
             if (action === 'increase') fontSize += 10;
             if (action === 'decrease') fontSize -= 10;
             if (action === 'reset') fontSize = 100;
-            
             if (fontSize < 70) fontSize = 70;
             if (fontSize > 200) fontSize = 200;
-            
             document.body.style.fontSize = fontSize + "%";
             var icon = document.querySelector('.button-access');
             if(icon) icon.style.fontSize = "16px";
@@ -282,7 +272,7 @@
             }
         }
 
-        // --- EVENTOS DE BOTÕES ---
+        // Binds
         document.getElementById('btn-inc-text').onclick = () => fontManager('increase');
         document.getElementById('btn-dec-text').onclick = () => fontManager('decrease');
         document.getElementById('btn-reset-text').onclick = () => fontManager('reset');
@@ -295,7 +285,7 @@
         document.getElementById('btn-reader').onclick = () => leitordeTela();
         document.getElementById('btn-reset').onclick = () => resetSettings();
 
-        // --- SISTEMA DE TECLAS DE ATALHO (Alt + Shift + Tecla) ---
+        // Atalhos
         document.addEventListener('keydown', function(e) {
             if (e.altKey && e.shiftKey) {
                 switch(e.key.toUpperCase()) {
@@ -318,7 +308,7 @@
             }
         });
 
-        // Carregar Estado
+        // Load State
         var savedSize = localStorage.getItem('acc_fontSize');
         if (savedSize) {
             fontSize = parseInt(savedSize);
